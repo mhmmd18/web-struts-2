@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	
+	<package name="log" namespace="/log" extends="default">		
+		<interceptors>
+			<interceptor class="id.util.interceptor.LoginInterceptor" name="loginInterceptor"/>
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="loginInterceptor"/>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<global-results>
+			<result name="login" type="redirectAction">
+				<param name="actionName">login</param>
+				<param name="namespace">/</param>
+			</result>
+			<result name="dashboard" type="redirectAction">
+				<param name="actionName">dashboard</param>
+				<param name="namespace">/</param>
+			</result>
+		</global-results>
+		
+		<!-- Start Log Aktivitas -->
+		<action name="log-aktivitas">
+			<interceptor-ref name="loginStack">
+				<param name="loginInterceptor.action">log-aktivitas</param>
+			</interceptor-ref>
+			<result>/WEB-INF/pages/menu/LogAktifitas.jsp</result>
+		</action>
+		<!-- End Log Aktivitas -->
+		
+		<!-- Start Log Server -->
+		<action name="log-server">
+			<interceptor-ref name="loginStack">
+				<param name="loginInterceptor.action">log-server</param>
+			</interceptor-ref>
+			<result>/WEB-INF/pages/menu/LogServer.jsp</result>
+		</action>
+		<!-- End Log Server -->
+	</package>
+	
+	<package name="logJson" namespace="/log" extends="json-default">
+		<interceptors>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="json">
+					<param name="enableSMD">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="defaultStack" />
+	</package>
+	
+</struts>

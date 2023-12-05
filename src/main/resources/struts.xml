@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+   
+   	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.extension" value=",,action" />
+	<constant name="struts.custom.i18n.resources" value="global" />
+	<constant name="struts.multipart.maxSize" value="50000000" />
+   
+   <package name="default" extends="struts-default" namespace="/">
+      <interceptors>
+			<interceptor class="id.util.interceptor.LoginInterceptor" name="loginInterceptor"/>
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="loginInterceptor"/>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>	
+		</interceptors>	
+				
+		<global-results>
+			<result name="login" type="redirectAction">
+				<param name="actionName">login</param>
+				<param name="namespace">/</param>
+			</result>
+		</global-results>	
+   </package>
+   
+   <package name="json" extends="json-default">
+		<interceptors>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="json">
+					<param name="enableSMD">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="defaultStack" />
+		
+		<action name="LoadMenu" class="id.app.action.MenuAction" method="loadMenu">
+			<result type="json"></result>
+		</action>
+	</package>
+   
+   <include file="struts/struts-login.xml" />
+   <include file="struts/struts-logout.xml" />
+   <include file="struts/struts-setting.xml" />
+   <include file="struts/struts-log.xml" />
+   
+</struts>

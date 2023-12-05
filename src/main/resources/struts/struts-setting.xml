@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	
+	<package name="setting" namespace="/setting" extends="default">		
+		<interceptors>
+			<interceptor class="id.util.interceptor.LoginInterceptor" name="loginInterceptor"/>
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="loginInterceptor"/>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<global-results>
+			<result name="login" type="redirectAction">
+				<param name="actionName">login</param>
+				<param name="namespace">/</param>
+			</result>
+			<result name="dashboard" type="redirectAction">
+				<param name="actionName">dashboard</param>
+				<param name="namespace">/</param>
+			</result>
+		</global-results>
+		
+		<!-- Data User -->
+		<action name="data-user">
+			<interceptor-ref name="loginStack">
+				<param name="loginInterceptor.action">data-user</param>
+			</interceptor-ref>
+			<result>/WEB-INF/pages/menu/DataUser.jsp</result>
+		</action>
+		<!-- /Data User -->
+
+		<!-- /Data Wo -->
+		<action name="data-wo">
+			<interceptor-ref name="loginStack">
+				<param name="loginInterceptor.action">data-wo</param>
+			</interceptor-ref>
+			<result>/WEB-INF/pages/menu/DataWo.jsp</result>
+		</action>
+		<!-- /Data Wo -->
+		
+		<!-- /Data Tiket -->
+		<action name="data-tiket">
+			<interceptor-ref name="loginStack">
+				<param name="loginInterceptor.action">data-tiket</param>
+			</interceptor-ref>
+			<result>/WEB-INF/pages/menu/DataTiket.jsp</result>
+		</action>
+		<!-- /Data Tiket -->
+	</package>
+	
+	<package name="settingJson" namespace="/setting" extends="json-default">
+		<interceptors>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="json">
+					<param name="enableSMD">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="defaultStack" />
+		
+		<!-- Data User -->
+		<action name="GetDataUser" class="id.app.action.setting.DataUserAction" method="GetDataUser">
+			<result type="json"></result>
+		</action>
+		<!-- /Data User -->
+		<!-- Data Wo -->
+		<action name="GetDataWo" class="id.app.action.setting.DataWoAction" method="GetDataWo">
+			<result type="json"></result>
+		</action>
+		<!-- /Data Wo -->
+
+		<!-- /Data Provinsi -->
+		<action name="GetDataProvinsi" class="id.app.action.setting.DataProvinsiAction" method="GetDataProvinsi">
+			<result type="json"></result>
+		</action>
+
+		<action name="getDataTiket" class="id.app.action.setting.DataTiketAction" method="getDataTiket">
+			<result type="json"></result>
+		</action>
+
+
+	</package>
+	
+</struts>

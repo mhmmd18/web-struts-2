@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	
+	<package name="Login" namespace="/" extends="default">		
+		<interceptors>
+			<interceptor class="id.util.interceptor.LoginInterceptor" name="loginInterceptor"/>
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="loginInterceptor"/>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<action name="login">	 
+			<result>/WEB-INF/pages/login.jsp</result>
+		</action>
+		
+		<action name="LoginAction" class="id.app.action.LoginAction">
+			<result name="success" type="redirectAction">dashboard</result>
+			<result name="input">/WEB-INF/pages/login.jsp</result>
+			<result name="error">/WEB-INF/pages/login.jsp</result>
+		</action>
+		
+		<action name="dashboard">
+			<interceptor-ref name="loginStack"></interceptor-ref>
+			<result>/WEB-INF/pages/i-dashboard.jsp</result>
+		</action>
+	</package>
+	
+</struts>
