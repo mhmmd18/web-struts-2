@@ -6,9 +6,9 @@ function getDataTiket() {
         type: 'GET',
         dataType: 'json',
         success: function (res) {
-            console.log(res);
+            console.log(res.data.Ticket);
 
-            var ticketData = res.ticket;
+            var ticketData = res.data.Ticket;
 
             var tableData = $('#datatable').DataTable();
             tableData.clear();
@@ -17,16 +17,17 @@ function getDataTiket() {
                 var json = ticketData[i];
                 tableData.row.add([
                     json["id"],
-                    json["fullName"],
+                    json["full_name"],
                     json["nik"],
                     json["nkk"],
-                    json["idPel"],
-                    json["noHp"],
+                    json["id_pel"],
+                    json["no_hp"],
                     json["alamat"],
                     json["lokasi"],
                     json["validasi"],
-                    json["buktiKtp"],
-                    json["buktiMeter"]
+                    // Tambahkan parsing untuk buktiKtp dan buktiMeter
+                    '<img src="' + json["bukti_ktp"] + '" alt="KTP Image" width="50">',
+                    '<img src="' + json["bukti_meter"] + '" alt="Meter Image" width="50">'
                 ]);
             });
 
@@ -45,5 +46,3 @@ $(document).ready(function () {
     $('#datatable').DataTable();
     getDataTiket();
 });
-
-
